@@ -6,7 +6,7 @@ durable_objects = { bindings = [{ name = "RateLimiter", class_name = "RateLimite
 
 [[migrations]]
 tag = "v1"
-new_classes = ["RateLimiter"]
+new_sqlite_classes = ["RateLimiter"]
 
 routes = [
   { pattern = "hassio.42junebug.com/*", script = "jwt-ratelimiter" }
