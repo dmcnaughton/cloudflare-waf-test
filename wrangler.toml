@@ -1,0 +1,13 @@
+name = "jwt-ratelimiter"
+main = "src/index.js"
+compatibility_date = "2024-06-21"
+
+durable_objects = { bindings = [{ name = "RateLimiter", class_name = "RateLimiter" }] }
+
+[[migrations]]
+tag = "v1"
+new_classes = ["RateLimiter"]
+
+routes = [
+  { pattern = "example.com/api/*", script = "jwt-ratelimiter" }
+]
