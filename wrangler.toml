@@ -9,5 +9,5 @@ tag = "v1"
 new_classes = ["RateLimiter"]
 
 routes = [
-  { pattern = "example.com/api/*", script = "jwt-ratelimiter" }
+  { pattern = "hassio.42junebug.com/*", script = "jwt-ratelimiter" }
 ]
