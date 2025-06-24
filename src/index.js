@@ -2,7 +2,7 @@ import { RateLimiter } from './rate_limiter.js';
 
 export default {
   async fetch(request, env, ctx) {
-    /*const jwtHeader = request.headers.get("X-Test-RateLimit");
+    const jwtHeader = request.headers.get("X-Test-RateLimit");
 
     if (!jwtHeader) {
       return fetch(request);
@@ -23,9 +23,9 @@ export default {
       return response;
     }
 
-    return fetch(request);*/
+    return fetch(request);
 
-   
+   /*
 const url = new URL(request.url);
 
     if (request.method === 'POST' && url.pathname.endsWith('/RequestInvoice')) {
@@ -54,7 +54,7 @@ const url = new URL(request.url);
     }
 
     return fetch(request);
-
+*/
   }
 };
 
