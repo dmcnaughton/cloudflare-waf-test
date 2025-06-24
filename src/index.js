@@ -2,7 +2,7 @@ import { RateLimiter } from './rate_limiter.js';
 
 export default {
   async fetch(request, env, ctx) {
-    const jwtHeader = request.headers.get("X-Test-RateLimit");
+    /*const jwtHeader = request.headers.get("X-Test-RateLimit");
 
     if (!jwtHeader) {
       return fetch(request);
@@ -23,7 +23,27 @@ export default {
       return response;
     }
 
-    return fetch(request);
+    return fetch(request);*/
+
+    const url = new URL(request.url);
+
+    if (request.method === 'POST' && url.pathname.endsWith('/RequestInvoice')) {
+      const contentType = request.headers.get('content-type') || '';
+      if (contentType.includes('application/x-www-form-urlencoded')) {
+        const bodyText = await request.text();
+        const params = new URLSearchParams(bodyText);
+
+        const facilityID = params.get('TeeTime.FacilityID');
+        const amount = parseFloat(params.get('TeeTime.Amount'));
+
+        if (facilityID === '9092' && amount < 2.0) {
+          return new Response('Bad Request: Invalid FacilityID and Amount', { status: 400 });
+        }
+      }
+    }
+
+    // Allow the request to proceed
+    return fetch(request);
   }
 };
 
