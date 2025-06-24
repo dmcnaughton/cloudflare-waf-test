@@ -27,10 +27,11 @@ export default {
 
     const url = new URL(request.url);
 
-    if (request.method === 'POST' && url.pathname.endsWith('/RequestInvoice')) {
+    
+if (request.method === 'POST' && url.pathname.endsWith('/RequestInvoice')) {
       const contentType = request.headers.get('content-type') || '';
       if (contentType.includes('application/x-www-form-urlencoded')) {
-        const bodyText = await request.text();
+        const bodyText = await request.clone().text(); // Clone before reading
         const params = new URLSearchParams(bodyText);
 
         const facilityID = params.get('TeeTime.FacilityID');
@@ -39,11 +40,17 @@ export default {
         if (facilityID === '9092' && amount < 2.0) {
           return new Response('Bad Request: Invalid FacilityID and Amount', { status: 400 });
         }
-      }
-    }
 
-    // Allow the request to proceed
-    return fetch(request);
+        // Rebuild the request with the original body
+        const newRequest = new Request(request.url, {
+          method: request.method,
+          headers: request.headers,
+          body: bodyText,
+          redirect: request.redirect,
+        });
+
+        return fetch(newRequest);
+
   }
 };
 
