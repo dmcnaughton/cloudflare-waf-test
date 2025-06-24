@@ -25,10 +25,10 @@ export default {
 
     return fetch(request);*/
 
-    const url = new URL(request.url);
+   
+const url = new URL(request.url);
 
-    
-if (request.method === 'POST' && url.pathname.endsWith('/RequestInvoice')) {
+    if (request.method === 'POST' && url.pathname.endsWith('/RequestInvoice')) {
       const contentType = request.headers.get('content-type') || '';
       if (contentType.includes('application/x-www-form-urlencoded')) {
         const bodyText = await request.clone().text(); // Clone before reading
@@ -50,6 +50,10 @@ if (request.method === 'POST' && url.pathname.endsWith('/RequestInvoice')) {
         });
 
         return fetch(newRequest);
+      }
+    }
+
+    return fetch(request);
 
   }
 };
